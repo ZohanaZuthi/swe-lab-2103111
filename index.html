@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Quick HTML + CSS Website</title>
+  <meta name="description" content="A clean, responsive one-page site using only HTML and CSS." />
+  <style>
+    :root{
+      --bg: #0f172a;         /* slate-900 */
+      --panel: #111827cc;    /* gray-900 w/ alpha */
+      --text: #e5e7eb;       /* gray-200 */
+      --muted: #94a3b8;      /* slate-400 */
+      --brand: #38bdf8;      /* sky-400 */
+      --brand-2: #a78bfa;    /* violet-400 */
+      --accent: #34d399;     /* emerald-400 */
+      --card: #111827;       /* gray-900 */
+      --ring: #334155;       /* slate-700 */
+      --radius: 1.25rem;
+      --shadow: 0 10px 30px rgba(0,0,0,.3);
+    }
+
+    @media (prefers-color-scheme: light) {
+      :root{
+        --bg: #ffffff;
+        --panel: #ffffffd9;
+        --text: #0f172a;
+        --muted: #475569;
+        --card: #f8fafc;
+        --ring: #e2e8f0;
+        --shadow: 0 8px 28px rgba(2, 6, 23, .08);
+      }
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0; font: 16px/1.6 system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      color: var(--text); background: radial-gradient(1200px 600px at 10% 0%, rgba(56,189,248,.12), transparent 60%),
+                               radial-gradient(1000px 500px at 90% -10%, rgba(167,139,250,.14), transparent 60%),
+                               var(--bg);
+    }
+
+    .container { width: min(1100px, 92%); margin: 0 auto; }
+
+    /* Header */
+    header {
+      position: sticky; top: 0; z-index: 50;
+      backdrop-filter: saturate(1.2) blur(8px);
+      background: var(--panel);
+      border-bottom: 1px solid var(--ring);
+    }
+    .nav { display: flex; align-items: center; justify-content: space-between; padding: .9rem 0; }
+    .brand { display: inline-flex; align-items: center; gap: .6rem; text-decoration: none; }
+    .logo { width: 36px; height: 36px; border-radius: 10px; background: linear-gradient(135deg, var(--brand), var(--brand-2)); box-shadow: var(--shadow); }
+    .brand span { font-weight: 700; letter-spacing: .2px; }
+    nav ul { display: flex; gap: 1rem; list-style: none; margin: 0; padding: 0; }
+    nav a { color: var(--text); text-decoration: none; padding: .5rem .8rem; border-radius: .7rem; }
+    nav a:hover { background: color-mix(in oklab, var(--brand) 18%, transparent); }
+
+    /* Hero */
+    .hero { padding: 6rem 0 4rem; display: grid; gap: 2rem; align-items: center; grid-template-columns: 1.2fr .8fr; }
+    .hero h1 { font-size: clamp(2.2rem, 4vw + .5rem, 4rem); line-height: 1.1; margin: 0 0 1rem; }
+    .hero p { font-size: 1.125rem; color: var(--muted); margin: 0 0 2rem; }
+    .cta { display: inline-flex; gap: .8rem; flex-wrap: wrap; }
+    .btn { appearance: none; border: none; border-radius: 999px; padding: .9rem 1.2rem; font-weight: 600; cursor: pointer; text-decoration: none; }
+    .btn-primary { background: linear-gradient(135deg, var(--brand), var(--brand-2)); color: #0b1020; box-shadow: var(--shadow); }
+    .btn-ghost { background: transparent; outline: 1px solid var(--ring); color: var(--text); }
+
+    .mockup { aspect-ratio: 4/3; background: linear-gradient(180deg, color-mix(in oklab, var(--card) 88%, transparent), transparent 80%),
+                               linear-gradient(135deg, rgba(56,189,248,.18), rgba(167,139,250,.18));
+               border: 1px solid var(--ring); border-radius: var(--radius); box-shadow: var(--shadow); }
+
+    /* Sections */
+    section { padding: 4rem 0; }
+    .section-title { font-size: clamp(1.6rem, 2vw + .6rem, 2.2rem); margin: 0 0 1rem; }
+    .section-sub { color: var(--muted); margin-top: 0; }
+
+    /* Features */
+    .grid { display: grid; gap: 1.2rem; grid-template-columns: repeat(3, 1fr); }
+    .card { background: var(--card); border: 1px solid var(--ring); border-radius: var(--radius); padding: 1.2rem; box-shadow: var(--shadow); }
+    .icon { width: 44px; height: 44px; border-radius: .9rem; display: grid; place-items: center; margin-bottom: .8rem; font-weight: 700; background: linear-gradient(135deg, var(--brand), var(--accent)); color: #051018; }
+
+    /* Gallery */
+    .gallery { display: grid; gap: .8rem; grid-template-columns: repeat(6, 1fr); }
+    .gallery div { aspect-ratio: 1 / 1; border-radius: .9rem; border: 1px solid var(--ring); background: linear-gradient(135deg, rgba(56,189,248,.25), rgba(52,211,153,.25)); box-shadow: var(--shadow); }
+    .gallery div:nth-child(odd) { background: linear-gradient(135deg, rgba(167,139,250,.25), rgba(56,189,248,.25)); }
+
+    /* About */
+    .about { display: grid; gap: 1.5rem; grid-template-columns: 1fr 1fr; }
+    .about .panel { background: var(--card); padding: 1.2rem; border-radius: var(--radius); border: 1px solid var(--ring); box-shadow: var(--shadow); }
+
+    /* Contact */
+    form { display: grid; gap: 1rem; }
+    label { font-weight: 600; }
+    input, textarea { width: 100%; padding: .8rem 1rem; border-radius: .9rem; border: 1px solid var(--ring); background: transparent; color: var(--text); }
+    textarea { min-height: 140px; resize: vertical; }
+    input:focus, textarea:focus { outline: 2px solid color-mix(in oklab, var(--brand) 50%, transparent); }
+
+    /* Footer */
+    footer { padding: 2rem 0 4rem; color: var(--muted); border-top: 1px solid var(--ring); }
+
+    /* Responsive */
+    @media (max-width: 960px) {
+      .hero { grid-template-columns: 1fr; }
+      .mockup { order: -1; }
+      .grid { grid-template-columns: 1fr 1fr; }
+      .gallery { grid-template-columns: repeat(3, 1fr); }
+      .about { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 560px) {
+      nav ul { gap: .4rem; flex-wrap: wrap; }
+      .grid { grid-template-columns: 1fr; }
+      .gallery { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav" role="navigation" aria-label="Primary">
+      <a href="#home" class="brand">
+        <div class="logo" aria-hidden="true"></div>
+        <span>QuickSite</span>
+      </a>
+      <nav>
+        <ul>
+          <li><a href="#features">Features</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#gallery">Gallery</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="home" class="container">
+    <section class="hero" aria-labelledby="h1">
+      <div>
+        <h1 id="h1">Build something beautiful fast—using just HTML & CSS.</h1>
+        <p>A minimal, responsive starter you can customize in minutes. No JavaScript, no frameworks—just clean, modern CSS with smart defaults.</p>
+        <div class="cta">
+          <a class="btn btn-primary" href="#contact">Get in touch</a>
+          <a class="btn btn-ghost" href="#features">See features</a>
+        </div>
+      </div>
+      <div class="mockup" role="img" aria-label="Abstract preview of your site layout"></div>
+    </section>
+
+    <section id="features" aria-labelledby="features-title">
+      <h2 class="section-title" id="features-title">Features</h2>
+      <p class="section-sub">A tiny but mighty set of layout primitives and styles so you can ship quickly.</p>
+      <div class="grid" role="list">
+        <article class="card" role="listitem">
+          <div class="icon">A</div>
+          <h3>Accessible</h3>
+          <p>Semantic markup, focus styles, and strong contrast out of the box.</p>
+        </article>
+        <article class="card" role="listitem">
+          <div class="icon">R</div>
+          <h3>Responsive</h3>
+          <p>Fluid grids and typography scale gracefully from phone to desktop.</p>
+        </article>
+        <article class="card" role="listitem">
+          <div class="icon">F</div>
+          <h3>Fast</h3>
+          <p>No JS required. Small CSS footprint for quick loads and great UX.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="about" class="about" aria-labelledby="about-title">
+      <div>
+        <h2 class="section-title" id="about-title">About this template</h2>
+        <p class="section-sub">Drop this file anywhere and you’ve got a crisp one‑page site ready to go.</p>
+      </div>
+      <div class="panel">
+        <p><strong>Tech:</strong> Pure HTML + CSS. Uses modern CSS features (custom properties, grids, sticky header, and color-mix) while staying broadly compatible.</p>
+        <p><strong>Customize:</strong> Edit the <code>:root</code> variables to tweak colors, radius, and shadows. Replace section content and add or remove cards as needed.</p>
+        <p><strong>Deploy:</strong> Save as <code>index.html</code> and host on any static provider (GitHub Pages, Netlify, Vercel, or your own server).</p>
+      </div>
+    </section>
+
+    <section id="gallery" aria-labelledby="gallery-title">
+      <h2 class="section-title" id="gallery-title">Gallery</h2>
+      <p class="section-sub">Drop in images or keep this abstract grid for a quick visual splash.</p>
+      <div class="gallery" aria-label="Image gallery">
+        <div></div><div></div><div></div><div></div><div></div><div></div>
+        <div></div><div></div><div></div><div></div><div></div><div></div>
+      </div>
+    </section>
+
+    <section id="contact" aria-labelledby="contact-title">
+      <h2 class="section-title" id="contact-title">Contact</h2>
+      <p class="section-sub">This form is static; wire it up later or change the <code>action</code> to your backend.</p>
+      <form method="post" action="#">
+        <div>
+          <label for="name">Name</label>
+          <input id="name" name="name" type="text" placeholder="Ada Lovelace" required />
+        </div>
+        <div>
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" placeholder="you@example.com" required />
+        </div>
+        <div>
+          <label for="message">Message</label>
+          <textarea id="message" name="message" placeholder="How can we help?" required></textarea>
+        </div>
+        <button class="btn btn-primary" type="submit">Send</button>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <small>© <span id="year"></span> QuickSite. Built with ♥ using only HTML & CSS.</small>
+    </div>
+  </footer>
+
+  <!-- Optional: tiny inline script-free year update using HTML only (no JS). Replace manually if needed. -->
+  <!-- For strict no-JS, set the year below by hand. -->
+  <script>
+    // If you prefer *absolutely no JS*, delete this block and hardcode the year in the footer.
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
