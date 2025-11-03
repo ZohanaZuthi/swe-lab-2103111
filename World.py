@@ -1,0 +1,1 @@
+print("World is to cruel")
